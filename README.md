@@ -21,7 +21,7 @@ cd ~/.local/share/fonts && unzip JetBrainsMono.zip && fc-cache -fv
 mv ~/.config/nvim ~/.config/nvim.backup.$(date +%Y%m%d_%H%M%S)
 
 # Clone this config
-git clone <YOUR_REPO_URL> ~/.config/nvim
+git clone https://github.com/unsortedkgpian/neovim-setup ~/.config/nvim
 
 # Start Neovim (plugins will auto-install)
 nvim
