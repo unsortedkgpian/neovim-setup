@@ -1,0 +1,316 @@
+" ~/.config/nvim/init.vim
+" DUAL CONFIGURATION APPROACH - COMPLEMENTARY TO INIT.LUA
+" 
+" PRIORITY SYSTEM:
+" 1. init.lua loads FIRST (handles core settings, plugins, keymaps)
+" 2. init.vim loads SECOND (adds visual enhancements, colors, extras)
+" 3. Conflicts avoided by using autocmd ColorScheme * for highlights
+" 4. Basic settings (clipboard, number, etc.) handled by init.lua ONLY
+"
+" WHAT THIS FILE PROVIDES:
+" - Enhanced syntax highlighting and custom colors
+" - Custom status line with detailed information
+" - File type specific color schemes
+" - Advanced visual enhancements (whitespace, folding, etc.)
+" - Additional utility key mappings
+" - Dynamic highlight groups and autocommands
+" - Plugin-specific color integrations
+"
+" ===================================================================
+" NOTE: Basic settings like clipboard, termguicolors, number, etc.
+" are handled by init.lua to avoid conflicts
+" ===================================================================
+
+" Enable syntax highlighting (safe to keep)
+syntax on
+
+" Enable filetype detection, plugins, and indenting (safe to keep)
+filetype plugin indent on
+
+" Set encoding (safe to keep)
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8
+
+" ===================================================================
+" DISPLAY AND COLORS - ENHANCED HIGHLIGHTS ONLY
+" ===================================================================
+
+" Color column settings (complementary to init.lua)
+set colorcolumn=80,120
+" Use autocmd to set highlights after colorscheme is loaded
+autocmd ColorScheme * highlight ColorColumn ctermbg=0 guibg=#2c2c2c
+
+" Enhanced line number colors (applied after colorscheme)
+autocmd ColorScheme * highlight LineNr ctermfg=grey guifg=#5c6370
+"
+
+" Cursor line highlighting
+set cursorline
+highlight CursorLine cterm=NONE ctermbg=NONE guibg=#2c323c
+
+" Search highlighting
+set hlsearch
+set incsearch
+highlight Search ctermbg=yellow ctermfg=black guibg=#e5c07b guifg=#282c34
+highlight IncSearch ctermbg=red ctermfg=white guibg=#e06c75 guifg=#ffffff
+
+" Visual mode highlighting
+highlight Visual ctermbg=blue ctermfg=white guibg=#3e4451 guifg=#ffffff
+
+" Status line colors
+set laststatus=2
+highlight StatusLine ctermbg=blue ctermfg=white guibg=#61afef guifg=#282c34
+highlight StatusLineNC ctermbg=grey ctermfg=black guibg=#5c6370 guifg=#282c34
+
+" Tab line colors
+highlight TabLine cterm=NONE ctermbg=grey ctermfg=white guibg=#3e4451 guifg=#abb2bf
+highlight TabLineFill cterm=NONE ctermbg=grey guibg=#282c34
+highlight TabLineSel cterm=bold ctermbg=blue ctermfg=white guibg=#61afef guifg=#282c34
+
+" Popup menu colors
+highlight Pmenu ctermbg=grey ctermfg=white guibg=#3e4451 guifg=#abb2bf
+highlight PmenuSel ctermbg=blue ctermfg=white guibg=#61afef guifg=#282c34
+highlight PmenuSbar ctermbg=grey guibg=#3e4451
+highlight PmenuThumb ctermbg=white guibg=#abb2bf
+
+" Fold colors
+highlight Folded ctermbg=grey ctermfg=white guibg=#3e4451 guifg=#5c6370
+highlight FoldColumn ctermbg=NONE ctermfg=grey guibg=NONE guifg=#5c6370
+
+" Sign column
+set signcolumn=yes
+highlight SignColumn ctermbg=NONE guibg=NONE
+
+" ===================================================================
+" SYNTAX HIGHLIGHTING ENHANCEMENTS
+" ===================================================================
+
+" Comments
+highlight Comment ctermfg=grey guifg=#5c6370 gui=italic
+
+" Strings
+highlight String ctermfg=green guifg=#98c379
+
+" Numbers
+highlight Number ctermfg=red guifg=#d19a66
+
+" Keywords
+highlight Keyword ctermfg=magenta guifg=#c678dd gui=bold
+
+" Functions
+highlight Function ctermfg=blue guifg=#61afef
+
+" Constants
+highlight Constant ctermfg=cyan guifg=#56b6c2
+
+" Types
+highlight Type ctermfg=yellow guifg=#e5c07b
+
+" Operators
+highlight Operator ctermfg=cyan guifg=#56b6c2
+
+" Special characters
+highlight Special ctermfg=red guifg=#e06c75
+
+" Preprocessor
+highlight PreProc ctermfg=yellow guifg=#e5c07b
+
+" Identifiers
+highlight Identifier ctermfg=red guifg=#e06c75
+
+" Statements
+highlight Statement ctermfg=magenta guifg=#c678dd
+
+" ===================================================================
+" DIFF COLORS
+" ===================================================================
+
+highlight DiffAdd ctermbg=green ctermfg=black guibg=#98c379 guifg=#282c34
+highlight DiffChange ctermbg=yellow ctermfg=black guibg=#e5c07b guifg=#282c34
+highlight DiffDelete ctermbg=red ctermfg=black guibg=#e06c75 guifg=#282c34
+highlight DiffText ctermbg=blue ctermfg=white guibg=#61afef guifg=#ffffff gui=bold
+
+" ===================================================================
+" ERROR AND WARNING COLORS
+" ===================================================================
+
+highlight Error ctermbg=red ctermfg=white guibg=#e06c75 guifg=#ffffff
+highlight ErrorMsg ctermbg=red ctermfg=white guibg=#e06c75 guifg=#ffffff
+highlight WarningMsg ctermbg=yellow ctermfg=black guibg=#e5c07b guifg=#282c34
+
+" Spell checking
+highlight SpellBad cterm=underline ctermfg=red gui=undercurl guisp=#e06c75
+highlight SpellCap cterm=underline ctermfg=blue gui=undercurl guisp=#61afef
+highlight SpellRare cterm=underline ctermfg=magenta gui=undercurl guisp=#c678dd
+highlight SpellLocal cterm=underline ctermfg=cyan gui=undercurl guisp=#56b6c2
+
+" ===================================================================
+" WINDOW AND SPLIT COLORS
+" ===================================================================
+
+highlight VertSplit ctermbg=NONE ctermfg=grey guibg=NONE guifg=#3e4451
+highlight WinSeparator ctermbg=NONE ctermfg=grey guibg=NONE guifg=#3e4451
+
+" ===================================================================
+" MATCHING PARENTHESES
+" ===================================================================
+
+highlight MatchParen ctermbg=blue ctermfg=white guibg=#61afef guifg=#ffffff gui=bold
+
+" ===================================================================
+" ADDITIONAL VISUAL ENHANCEMENTS
+" ===================================================================
+
+" Whitespace characters
+set list
+set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+highlight SpecialKey ctermfg=grey guifg=#3e4451
+highlight NonText ctermfg=grey guifg=#3e4451
+
+" Conceal
+highlight Conceal ctermfg=grey guifg=#5c6370
+
+" Directory listing
+highlight Directory ctermfg=blue guifg=#61afef gui=bold
+
+" ===================================================================
+" CUSTOM STATUS LINE WITH COLORS
+" ===================================================================
+
+" Custom status line function
+function! CustomStatusLine()
+  let l:line = ''
+  let l:line .= '%#StatusLine#'
+  let l:line .= ' %f '  " File name
+  let l:line .= '%m'    " Modified flag
+  let l:line .= '%r'    " Readonly flag
+  let l:line .= '%h'    " Help flag
+  let l:line .= '%w'    " Preview flag
+  let l:line .= '%='    " Switch to right side
+  let l:line .= ' %y '  " File type
+  let l:line .= '[%{&fileencoding?&fileencoding:&encoding}] '  " Encoding
+  let l:line .= '%p%% ' " Percentage through file
+  let l:line .= '%l:%c ' " Line and column
+  return l:line
+endfunction
+
+" Set the status line
+set statusline=%!CustomStatusLine()
+
+" ===================================================================
+" AUTOCOMMANDS FOR DYNAMIC COLORS
+" ===================================================================
+
+" Highlight TODO, FIXME, NOTE, etc.
+augroup custom_highlights
+  autocmd!
+  autocmd Syntax * call matchadd('Todo', '\\W\\zs\\(TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\)')
+  autocmd Syntax * call matchadd('Debug', '\\W\\zs\\(NOTE\\|INFO\\|IDEA\\)')
+augroup END
+
+" Define custom highlight groups
+highlight Todo ctermbg=yellow ctermfg=black guibg=#e5c07b guifg=#282c34 gui=bold
+highlight Debug ctermbg=blue ctermfg=white guibg=#61afef guifg=#ffffff gui=bold
+
+" ===================================================================
+" FILE TYPE SPECIFIC COLORS
+" ===================================================================
+
+" Markdown
+autocmd FileType markdown highlight markdownH1 ctermfg=red guifg=#e06c75 gui=bold
+autocmd FileType markdown highlight markdownH2 ctermfg=yellow guifg=#e5c07b gui=bold
+autocmd FileType markdown highlight markdownH3 ctermfg=blue guifg=#61afef gui=bold
+autocmd FileType markdown highlight markdownCode ctermfg=green guifg=#98c379
+autocmd FileType markdown highlight markdownCodeBlock ctermfg=green guifg=#98c379
+
+" HTML
+autocmd FileType html highlight htmlTag ctermfg=blue guifg=#61afef
+autocmd FileType html highlight htmlEndTag ctermfg=blue guifg=#61afef
+autocmd FileType html highlight htmlTagName ctermfg=red guifg=#e06c75 gui=bold
+autocmd FileType html highlight htmlArg ctermfg=yellow guifg=#e5c07b
+
+" CSS
+autocmd FileType css highlight cssClassName ctermfg=yellow guifg=#e5c07b
+autocmd FileType css highlight cssIdentifier ctermfg=blue guifg=#61afef
+autocmd FileType css highlight cssColor ctermfg=cyan guifg=#56b6c2
+autocmd FileType css highlight cssValueNumber ctermfg=magenta guifg=#c678dd
+
+" JavaScript
+autocmd FileType javascript highlight javaScriptFunction ctermfg=magenta guifg=#c678dd gui=bold
+autocmd FileType javascript highlight javaScriptNumber ctermfg=red guifg=#d19a66
+autocmd FileType javascript highlight javaScriptBraces ctermfg=cyan guifg=#56b6c2
+
+" Python
+autocmd FileType python highlight pythonFunction ctermfg=blue guifg=#61afef gui=bold
+autocmd FileType python highlight pythonBuiltin ctermfg=cyan guifg=#56b6c2
+autocmd FileType python highlight pythonDecorator ctermfg=yellow guifg=#e5c07b
+
+" ===================================================================
+" ADDITIONAL SETTINGS
+" ===================================================================
+
+" Enable mouse support
+set mouse=a
+
+" Set scroll offset
+set scrolloff=8
+set sidescrolloff=8
+
+" Improve search
+set ignorecase
+set smartcase
+
+" Better completion
+set wildmenu
+set wildmode=longest:full,full
+
+" Show matching brackets
+set showmatch
+set matchtime=2
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+set foldlevelstart=99
+set foldenable
+
+" ===================================================================
+" KEY MAPPINGS
+" ===================================================================
+
+" Clear search highlight
+nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
+
+" Toggle spell checking
+nnoremap <F7> :setlocal spell! spelllang=en_us<CR>
+
+" Toggle line numbers
+nnoremap <F2> :set number! relativenumber!<CR>
+
+" Toggle list characters
+nnoremap <F3> :set list!<CR>
+
+" ===================================================================
+" PLUGIN INTEGRATION (if using vim-plug or similar)
+" ===================================================================
+
+" This section is for additional plugin-specific color configurations
+" that might not be covered by the main colorscheme
+
+" Example for gitgutter (if installed)
+if exists('*gitgutter#highlight#define_highlights')
+  highlight GitGutterAdd ctermfg=green guifg=#98c379
+  highlight GitGutterChange ctermfg=yellow guifg=#e5c07b
+  highlight GitGutterDelete ctermfg=red guifg=#e06c75
+  highlight GitGutterChangeDelete ctermfg=yellow guifg=#e5c07b
+endif
+
+" Example for ale (if installed)
+if exists('g:ale_enabled')
+  highlight ALEErrorSign ctermfg=red guifg=#e06c75 gui=bold
+  highlight ALEWarningSign ctermfg=yellow guifg=#e5c07b gui=bold
+  highlight ALEInfoSign ctermfg=blue guifg=#61afef gui=bold
+endif
+
+
